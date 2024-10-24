@@ -37,5 +37,5 @@ struct RatingView: View {
 }
 
 #Preview {
-    RatingView(rating: 8.7)
+    RatingView(rating: Movie.placeholder2.voteAverage)
 }

@@ -25,3 +25,7 @@ struct TitleReleaseDateView: View {
         .frame(width: 200)
     }
 }
+
+#Preview{
+    TitleReleaseDateView(movie: Movie.placeholder2)
+}

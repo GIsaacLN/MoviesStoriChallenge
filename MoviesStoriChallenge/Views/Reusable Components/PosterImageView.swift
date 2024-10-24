@@ -38,3 +38,11 @@ struct PosterImageView: View {
         }
     }
 }
+
+#Preview{
+    PosterImageView(posterPath: Movie.placeholder2.posterPath, rating: Movie.placeholder2.voteAverage, isPosterPressed: .constant(true))
+}
+
+#Preview{
+    PosterImageView(posterPath: Movie.placeholder2.posterPath, rating: Movie.placeholder2.voteAverage, isPosterPressed: .constant(false))
+}

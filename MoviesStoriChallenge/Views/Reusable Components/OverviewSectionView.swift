@@ -44,3 +44,11 @@ struct OverviewSectionView: View {
         .padding()
     }
 }
+
+#Preview {
+    OverviewSectionView(movie: Movie.placeholder2, isButtonPressed: .constant(true))
+}
+
+#Preview {
+    OverviewSectionView(movie: Movie.placeholder2, isButtonPressed: .constant(false))
+}

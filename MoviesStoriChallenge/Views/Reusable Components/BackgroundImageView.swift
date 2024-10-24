@@ -39,3 +39,11 @@ struct BackgroundImageView: View {
         }
     }
 }
+
+#Preview {
+    BackgroundImageView(posterPath: Movie.placeholder2.posterPath, isPosterPressed: true)
+}
+
+#Preview {
+    BackgroundImageView(posterPath: Movie.placeholder2.posterPath, isPosterPressed: false)
+}
