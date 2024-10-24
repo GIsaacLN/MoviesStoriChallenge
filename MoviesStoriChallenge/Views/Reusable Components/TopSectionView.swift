@@ -12,11 +12,12 @@ struct TopSectionView: View {
     @Binding var isPosterPressed: Bool
 
     var body: some View {
-        ZStack(alignment: .center) {
+        ZStack {
             BackgroundImageView(
                 posterPath: movie.posterPath,
                 isPosterPressed: isPosterPressed
             )
+            .blur(radius: isPosterPressed ? 20 : 0)
 
             HStack(alignment: isPosterPressed ? .center : .bottom) {
                 PosterImageView(

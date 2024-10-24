@@ -21,51 +21,58 @@ struct OverviewSectionView: View {
                 Text(movie.overview)
                     .font(.customBody)
                     .foregroundColor(.black)
-                    .lineLimit(nil)
             }
             Spacer()
 
-            VStack (spacing: 0) {
-                HStack(spacing: 20) {
-                    // Botón para ver el tráiler (simulado con un SafariView)
-                    CustomButtonView(
-                        title: "Ver Tráiler",
-                        backgroundColor: .green900,
-                        foregroundColor: .green100
-                    ) {
-                        showTrailer = true
-                    }
-                    .sheet(isPresented: $showTrailer) {
-                        SafariView(url: URL(string: "https://www.youtube.com/watch?v=example_trailer")!)
-                    }
-
-                    // Botón para compartir la película
-                    CustomButtonView(
-                        title: "Compartir",
-                        backgroundColor: .green300,
-                        foregroundColor: .green900
-                    ) {
-                        showShareSheet = true
-                    }
-                    .sheet(isPresented: $showShareSheet) {
-                        ShareSheet(activityItems: [movie.title, URL(string: "https://www.themoviedb.org/movie/\(movie.id)")!])
-                    }
-                }
-                // Botón para mostrar reseñas en un modal
-                CustomButtonView(
-                    title: "Ver Reseñas",
-                    backgroundColor: .green900,
-                    foregroundColor: .green100
-                ) {
-                    showModal = true
-                }
-                .sheet(isPresented: $showModal) {
-                    ReviewsModalView(movie: movie)
-                }
-                .padding(.top)
-            }
+            ActionButtonsView(
+                showTrailer: $showTrailer,
+                showModal: $showModal,
+                showShareSheet: $showShareSheet,
+                movie: movie
+            )
         }
         .padding()
+    }
+}
+
+struct ActionButtonsView: View {
+    @Binding var showTrailer: Bool
+    @Binding var showModal: Bool
+    @Binding var showShareSheet: Bool
+    let movie: Movie
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 20) {
+                CustomButtonView(
+                    title: "Ver Tráiler",
+                    backgroundColor: .green900,
+                    foregroundColor: .green100
+                ) { showTrailer = true }
+                .sheet(isPresented: $showTrailer) {
+                    SafariView(url: URL(string: "https://www.youtube.com/watch")!)
+                }
+
+                CustomButtonView(
+                    title: "Compartir",
+                    backgroundColor: .green300,
+                    foregroundColor: .green900
+                ) { showShareSheet = true }
+                .sheet(isPresented: $showShareSheet) {
+                    ShareSheet(activityItems: [movie.title, URL(string: "https://www.themoviedb.org/movie/\(movie.id)")!])
+                }
+            }
+
+            CustomButtonView(
+                title: "Ver Reseñas",
+                backgroundColor: .green900,
+                foregroundColor: .green100
+            ) { showModal = true }
+            .sheet(isPresented: $showModal) {
+                ReviewsModalView(movie: movie)
+            }
+            .padding(.top)
+        }
     }
 }
 
@@ -77,43 +84,7 @@ struct OverviewSectionView: View {
     OverviewSectionView(movie: Movie.placeholder2, isButtonPressed: .constant(false))
 }
 
-// MARK: - Modal de Reseñas
-
-struct ReviewsModalView: View {
-    let movie: Movie
-    @Environment(\.dismiss) var dismiss
-
-    var body: some View {
-        NavigationView {
-            VStack {
-                Text("Reseñas de \(movie.title)")
-                    .font(.customTitle)
-                    .padding()
-
-                ScrollView {
-                    ForEach(0..<5) { _ in
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Usuario \(Int.random(in: 1...100))")
-                                .font(.headline)
-                                .foregroundColor(.green900)
-                            Text("Esta película fue increíble, una de las mejores que he visto en mi vida. La recomiendo al 100%.")
-                                .font(.customBody)
-                                .foregroundColor(.gray)
-                        }
-                        .padding()
-                        Divider()
-                    }
-                }
-            }
-            .navigationBarItems(trailing: Button("Cerrar") {
-                dismiss()
-            })
-        }
-    }
-}
-
 // MARK: - Safari View para Tráiler
-
 struct SafariView: UIViewControllerRepresentable {
     let url: URL
 
@@ -125,7 +96,6 @@ struct SafariView: UIViewControllerRepresentable {
 }
 
 // MARK: - ShareSheet
-
 struct ShareSheet: UIViewControllerRepresentable {
     var activityItems: [Any]
 

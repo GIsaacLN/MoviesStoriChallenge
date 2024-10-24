@@ -29,7 +29,7 @@ struct MovieDetailView: View {
         }
         .background(Color.white)
         .navigationBarHidden(isPosterPressed)
-        .ignoresSafeArea(.all, edges: isPosterPressed ? .all : .bottom)
+        .ignoresSafeArea(edges: isPosterPressed ? .all : .bottom)
     }
 }
 
