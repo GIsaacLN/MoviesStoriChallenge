@@ -11,7 +11,7 @@ import SwiftUI
 struct MoviesStoriChallengeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TopRatedMoviesView()
         }
     }
 }
