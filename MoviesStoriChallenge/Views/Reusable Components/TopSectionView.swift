@@ -38,3 +38,8 @@ struct TopSectionView: View {
 #Preview {
     TopSectionView(movie: Movie.placeholder2, isPosterPressed: .constant(true))
 }
+
+#Preview {
+    TopSectionView(movie: Movie.placeholder2, isPosterPressed: .constant(false))
+}
+
